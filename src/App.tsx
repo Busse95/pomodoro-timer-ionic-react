@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
-import Todo from './pages/Todo';
+import TodoPage from './pages/Todo';
 import Timer from './pages/Timer';
 
 /* Core CSS required for Ionic components to work properly */
@@ -31,7 +31,7 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route path="/home" component={Home} exact={true} />
-          <Route path="/Todo" component={Todo} exact={true} />
+          <Route path="/Todo" component={TodoPage} exact={true} />
           <Route path="/Timer" component={Timer} exact={true} />
           <Route exact path="/" render={() => <Redirect to="/home" />} />
         </IonRouterOutlet>

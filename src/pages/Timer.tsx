@@ -43,12 +43,12 @@ class Timer extends React.Component<TimerProps,TimerState> {
           </IonHeader>
           <IonContent className="ion-padding">
             {('0' + ~~(this.state.count / 60)).slice(-2)}:{('0' + (this.state.count % 60)).slice(-2)}
-            <IonButton onClick={this.onStartPausePress}>
+            <IonButton onClick={this.onClickStartPause}>
               <IonTitle>
                 Start / Pause
               </IonTitle>
             </IonButton>
-            <IonButton onClick={this.onResetPress}>
+            <IonButton onClick={this.onClickReset}>
               <IonTitle>
                 Reset
               </IonTitle>
@@ -85,8 +85,8 @@ class Timer extends React.Component<TimerProps,TimerState> {
    return true;
   };
 
-  // ONPRESS METHODS
-  onStartPausePress = () => {
+  // ONCLICK METHODS
+  onClickStartPause = () => {
     // Pause Timer
     // if isRunning
     // setState isRunning: false
@@ -105,7 +105,7 @@ class Timer extends React.Component<TimerProps,TimerState> {
     return true;
   };
 
-  onResetPress = () => {
+  onClickReset = () => {
     // clearInterval
     // setState count:0 timerIndex:0
     return true;
