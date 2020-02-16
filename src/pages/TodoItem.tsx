@@ -8,10 +8,11 @@ interface TodoItemProps {
     todoChecked: boolean,
 };
 
+// IN THE RETURN OF THIS FC, IT IS IMPORTANT NOT TO USE A ANONYMOUS BIND FUNCTION FOR THE PASSED FUNCTIONS, BECAUSE THEY'D BIND TO THIS CLASS?!
 const TodoItem: React.FC<TodoItemProps> = (props) => (
     <IonItem>
-      <IonCheckbox onClick={() => props.onClickCheck} slot="start"/>
-      <IonButton onClick={() => props.onClickDelete}> 
+      <IonCheckbox onClick={props.onClickCheck} checked={props.todoChecked} slot="start"/>
+      <IonButton onClick={props.onClickDelete} slot="end"> 
         <IonLabel>Delete</IonLabel>
       </IonButton>
       <IonLabel>

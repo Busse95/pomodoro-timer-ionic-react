@@ -1,3 +1,10 @@
+/**
+ *  Timer Page
+ * One of the three content Pages
+ * features a 'pomodoro' timer
+ * The timer is reset upon exit, no persistence present
+ * uses setInterval Intervals, asynchrous threads, to realize timing
+ */
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonPage, IonButton } from '@ionic/react';
 import React from 'react';
 

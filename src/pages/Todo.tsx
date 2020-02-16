@@ -1,3 +1,12 @@
+/**
+ *  Todo Page
+ * One of the three content Pages
+ * features a user populated IonList
+ * No persistence present yet
+ * 
+ * The list in state keeps track of entered texts and whether they have been checked or not
+ * TODO: Now you need to save and load said list
+ */
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonPage, IonButton, IonList, IonListHeader, IonCheckbox, IonItem, IonLabel, IonInput } from '@ionic/react';
 import React from 'react';
 import TodoItem from './TodoItem'
@@ -8,23 +17,25 @@ interface Todo {
   isChecked: boolean,
 }
 
-// Still need to look up about interfaces
+// TODO: USE THE PROPS WHEN LOADING/SAVING DATA
 interface TodoProps {
 
 }
 
 interface TodoState {
   currentText: String,
-  /* each object looks like this {string, boolean} */
   todos: Array<Todo>,
 }
 
+// global variable enables unique IDs, however when saving/ loading, this might be a problem
 let id = 0
 
-// we need a list that we push to
-// we need a button to create todos as well as an input mask
-// each todo should come with a checkbox switch and a button to delete it
 class TodoPage extends React.Component<TodoProps, TodoState> {
+  /**
+   * 
+   * @param props 
+   */
+
   // CONSTRUCTOR
   constructor(props: TodoProps) {
     super(props);
@@ -36,7 +47,7 @@ class TodoPage extends React.Component<TodoProps, TodoState> {
 
   // UI METHOD
   render() {
-    // necessary in typescript
+    // the next line necessary in typescript react, in contrast to javascript react
     const { todos } = this.state;
     return (
       <IonPage>
@@ -62,8 +73,8 @@ class TodoPage extends React.Component<TodoProps, TodoState> {
               <IonListHeader>Your Todo's</IonListHeader>
               {todos.map(todo => (
                 <TodoItem
-                  onClickCheck={() => this.onClickCheck}
-                  onClickDelete={() => this.onClickDelete(todo.id)}
+                  onClickCheck={() => {this.onClickCheck(todo.id)}}
+                  onClickDelete={() => {this.onClickDelete(todo.id)}}
                   todoText={todo.text}
                   todoChecked={todo.isChecked}
                 />
@@ -74,9 +85,23 @@ class TodoPage extends React.Component<TodoProps, TodoState> {
       </IonPage>
     );    
   }
-  
+  /*
+  // MOUNT METHOD
+  componentDidMount() {
+    // TODO: LOAD THE SAVED TODO LIST OF THIS.STATE
+  };
+  */
+  /*
+  // UNMOUNT METHOD
+  componentWillUnmount() {
+    // TODO: SAVE THE TODO LIST OF THIS.STATE
+  };
+  */  
   // ONCHANGE METHODS
   onInputChange = (e: string) => {
+    /**
+     * This method keeps track of the input's text every time the event 'onChange' is fired, saves the text in this.state
+     */
     this.setState(previousState => ({
       currentText: e
     }))
@@ -84,6 +109,9 @@ class TodoPage extends React.Component<TodoProps, TodoState> {
   
   // ONCLICK METHODS
   onClickAdd = () => {
+    /**
+     * When Add button is clicked, this method adds a object to the state's list with the text of input
+     */
     // Avoid empty Todos
     if (this.state.currentText !== '') {
       this.setState(previousState => ({
@@ -102,16 +130,29 @@ class TodoPage extends React.Component<TodoProps, TodoState> {
     return true;
   }
 
-  onClickDelete = (id: number) => {
+  onClickDelete = (todoId: number) => {
+    /**
+     * When a delete button is clicked this method removes the object representing the row
+     */
     this.setState(previousState => ({
-      todos: previousState.todos.filter(todo => todo.id !== id)
+      todos: previousState.todos.filter(todo => todo.id !== todoId)
     }))
   }
 
-  // still need to read up on checkboxes, how does it track? Test !!!
-  onClickCheck = () => {
-    // set flag in state array
-    return true;
+  onClickCheck = (todoId: number) => {
+    /**
+     * When a checkbox is clicked this method toggles the boolean value of the object representing the row
+     */
+    this.setState(previousState => ({
+      todos: previousState.todos.map(todo => {
+        // Apply this to each todo in the list, either return it back or change the boolean val
+        if (todo.id !== todoId) return todo
+      return {
+        id: todo.id,
+        text: todo.text,
+        isChecked: !todo.isChecked
+      }})
+    }))
   }
 }
 

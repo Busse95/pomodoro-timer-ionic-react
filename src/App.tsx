@@ -1,3 +1,12 @@
+/**
+ *  Main App File
+ * contains routing to three different pages.
+ * Default routing is to the 'Home' page.
+ * The three CSS tiers have been imported but not modified.
+ * Navigation is done by IonTabButtons in IonTabBar and 
+ * content( the 3 pages ) are shown in IonTabs containing IonPages
+ * 
+ */
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/react';
