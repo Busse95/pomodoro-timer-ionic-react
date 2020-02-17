@@ -27,10 +27,9 @@ class Timer extends React.Component<TimerProps,TimerState> {
     timerIndex,
     timerLenghts,
   } */
-
   // CONSTRUCTOR
   constructor(props: TimerProps) {
-    super(props);
+    super(props)
     this.state = {
       count: 0,
       isRunning: false,
@@ -38,6 +37,8 @@ class Timer extends React.Component<TimerProps,TimerState> {
       timerLenghts: [5,25,],
     }
   };
+  // the reference to our asynchronous interval
+  interval: any
 
   // UI METHOD
   render() {
@@ -70,54 +71,69 @@ class Timer extends React.Component<TimerProps,TimerState> {
 
   };
   */
-  /*
   // UNMOUNT METHOD
   componentWillUnmount() {
-    //clearInterval(this.interval);
+    clearInterval(this.interval);
   };
-  */
+
   incrementTimer = () => {
-    /*
-        tempCount = this.state.count
-	this.setState(prevState => ({
+    let tempCount = this.state.count
+	  this.setState(prevState => ({
       count: prevState.count - 1,
     }));
-	// we resort to a temp count here because setState is asynchronous
+	  // we resort to a temp count here because setState is asynchronous
     if (tempCount - 1 === 0) {
-	  // this method is invoked while the count is =1 and about to be 0
+	    // this method is invoked while the count is =1 and about to be 0
       this.switchTimer();
     }
-
-    */
-   return true;
   };
 
+  switchTimer = () => {
+    // this interval could be cleared before it hit 0, thusly the timer could be slightly inaccurate
+    clearInterval(this.interval)
+    // toggle the timer index between 0 and 1
+    // fill the count with Length * secondsPerMinute
+    this.setState(prevState => ({
+      count: prevState.timerLenghts[1 - prevState.timerIndex] * 60,
+      timerIndex: 1 - prevState.timerIndex,
+      isRunning: false,
+    }));
+  };
+  
   // ONCLICK METHODS
   onClickStartPause = () => {
     // Pause Timer
-    // if isRunning
-    // setState isRunning: false
-    // clearInterval
-
+    if (this.state.isRunning) {
+      this.setState(prevState => ({
+        isRunning: false,
+      }))
+      clearInterval(this.interval)
+    } 
     // Start Timer
-    // if !isRunning count===0
-    // setState isRunning: true
-    // count: prevState.timerLenghts[prevState.timerIndex] * 60
-    // this.interval setInterval
-
+    else if (!this.state.isRunning && this.state.count === 0) {
+      this.setState(prevState => ({
+        isRunning: true,
+        count: prevState.timerLenghts[prevState.timerIndex] * 60
+      }))
+      this.interval = setInterval(this.incrementTimer)
+    }
     // Resume Timer
-    // else
-    // isRunning: true
-    // this.interval setInterval
-    return true;
+    else {
+      this.setState(prevState => ({
+        isRunning: true,
+      }))
+      this.interval = setInterval(this.incrementTimer)
+    }
   };
 
   onClickReset = () => {
-    // clearInterval
-    // setState count:0 timerIndex:0
-    return true;
+    clearInterval(this.interval)
+    this.setState(prevState => ({
+      count: 0,
+      timerIndex: 0,
+    }))
   };
-
+  
 };
 /* 
 const Timer: React.FC = () => {

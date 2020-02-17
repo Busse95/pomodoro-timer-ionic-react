@@ -78,8 +78,7 @@ class TodoPage extends React.Component<TodoProps, TodoState> {
                   todoText={todo.text}
                   todoChecked={todo.isChecked}
                 />
-              ))
-              }
+              ))}
             </IonList>
           </IonContent>
       </IonPage>
